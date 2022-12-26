@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>the Canteen System</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/pictures.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/box.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/whole.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link href="https://cdn.bootcdn.net/ajax/libs/limonte-sweetalert2/11.6.16/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/limonte-sweetalert2/11.6.16/sweetalert2.all.min.js"></script>
+</head>
+<body>
+    <div>
+        <img class="home" src="{{ url_for('static',filename="picture/Home.jpg") }}"/>
+    </div>
+    <div class="clearfix">
+        <div class="btn1">
+            <a class='btna' href="/RegPage">Register</a>
+        </div>
+        <div class="btn2">
+            <a class='btna' href="/LogPage">Login</a>
+        </div>
+        <div class="btn3">
+            <a class='btna' onclick="imf();return false;" href="#">introduction</a>
+        </div>
+    </div>
+    <script src="{{ url_for('static',filename='js/alert.js') }}"></script>
+</body>
+</html>

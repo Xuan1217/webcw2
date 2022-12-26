@@ -1,0 +1,29 @@
+{% extends "IndexPage.html" %}
+{% block content %}
+    <div>
+        <form action="/adjust_message" method="POST">
+            <div class="form-floating mb-3">
+                <input name='m_un' type="text" class="form-control" id="un" value="{{ user.Username }}" placeholder="Username" required>
+                <label for="di">Username</label>
+                <div class="invalid-feedback">
+                    Please enter dishes name here!
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input name='m_pw' class="form-control" type="password" id="pw" value="{{ user.Password }}" placeholder="Password" required>
+                <label for="pri">Password</label>
+                <div class="invalid-feedback">
+                    Please enter password here!
+                </div>
+            </div>
+            <button type="submit" onclick="chane()" class="btn btn-primary" >
+                Change
+            </button>
+            <button class="btn btn-primary">
+                <a class="bb" href="/UserPage">
+                    back
+                </a>
+            </button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+.guide_ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;}
+
+.guide_li{
+  float: left;
+}
+.guide_li a{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.guide_li a:hover{
+  background-color: #111;
+  color: #9cdcfe;
+  text-decoration: none;
+}
+.guide_logo{
+  float: left;
+}
+.guide_logo a{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+.guide_logo a:hover{
+  background-color: #111;
+  color: #9cdcfe;
+  text-decoration: none;
+}

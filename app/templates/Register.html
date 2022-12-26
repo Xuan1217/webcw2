@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>the Canteen System</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/whole.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/alert.js') }}"></script>
+</head>
+<body class="was-validated">
+    <div class="form_block">
+        <form action="/Register" method="post">
+            <div>
+                <p class="tc">Register your account</p>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" name="Ru" class="form-control" id="user" placeholder="Username" required>
+                <label for="user">Username</label>
+                <div class="invalid-feedback">
+                    Please enter username here!
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" name="Rp" type="Password" id="Password" placeholder="Password" required>
+                <label for="Password">Password</label>
+                <div class="invalid-feedback">
+                    Please enter password here!
+                </div>
+            </div>
+            <br/>
+            <div class="col-12">
+                <button onclick="reg()" type="submit" class="btn btn-primary">Register</button>
+                <button class="btn btn-primary" type="button">
+                    <a class="link" href="/">
+                        Back
+                    </a>
+                </button>
+            </div>
+            {% for i in get_flashed_messages()%}
+                <div class="flash_style">{{ i }}</div>
+            {% endfor %}
+        </form>
+    </div>

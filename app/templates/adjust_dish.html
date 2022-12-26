@@ -1,0 +1,44 @@
+{% extends 'manager_Index.html' %}
+{% block content %}
+    <div>
+        <form id="ad" action="/adjust_submit" method="POST">
+            <input type="text" id="hide" name="fake_value" value="{{ dish.Cid }}">
+            <div class="form-floating mb-3">
+                <input name='a_dish' type="text" class="form-control" id="di" value="{{ dish.dish }}" placeholder="Dishes" required>
+                <label for="di">Dishes</label>
+                <div class="invalid-feedback">
+                    Please enter dishes name here!
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input name='a_price' class="form-control" type="text" id="pri" value="{{ dish.price }}" placeholder="Price" required>
+                <label for="pri">Price</label>
+                <div class="invalid-feedback">
+                    Please enter dishes price here!
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input name='a_invent' class="form-control" type="text" id="invent" value="{{ dish.inventory }}" placeholder="Inventory" required>
+                <label for="invent">Inventory</label>
+                <div class="invalid-feedback">
+                    Please enter dishes inventory here!
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input name='a_pic' class="form-control" type="file" id="pic" value="{{ dish.pic }}" placeholder="Inventory" required>
+                <label for="pic">Picture</label>
+                <div class="invalid-feedback">
+                    Please enter dishes picture here!
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" >
+                Change
+            </button>
+            <button class="btn btn-primary">
+                <a class="bbb" href="/manager/manager_dish">
+                    back
+                </a>
+            </button>
+        </form>
+    </div>
+{% endblock %}

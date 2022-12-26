@@ -1,0 +1,67 @@
+{% extends 'IndexPage.html' %}
+    {% block content %}
+        <div>
+        <h2>My shopping Car</h2>
+        </div>
+        <div>
+        <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Picture</th>
+                <th scope="col">Dishes</th>
+                <th scope="col">Price</th>
+                <th scope="col">Number</th>
+                <th scope="col">Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in car_list %}
+            <tr>
+                <td><img class="list_pic" src="{{ i.pic }}"/></td>
+                <td>{{ i.dish }}</td>
+                <td>{{ i.price }}</td>
+                <td>{{ i.Num }}</td>
+                <td>
+                    <button class="op_btn" type="submit">
+                        <a href="{{ url_for('decline_shopping', this_id=i.Cid) }}">
+                            <i class="bi bi-patch-minus"></i>
+                        </a>
+                    </button>
+                    <button class="op_btn" type="submit">
+                        <a href="{{ url_for('ad_sh', this_id=i.Cid) }}">
+                            <i class="bi bi-patch-plus"></i>
+                        </a>
+                    </button>
+                    <button class="op_btn" type="submit">
+                        <a href="{{ url_for('delete', this_id=i.Cid) }}">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+            <tr>
+                <td>your total bill: {{ bill }}</td>
+            </tr>
+        </table>
+        <button class="o_btn">
+            <a href="{{ url_for('ShoppingPay') }}">
+                pay
+            </a>
+        </button>
+        </div>
+        <div>
+            {% with message = get_flashed_messages() %}
+                {% if message %}
+                    {% for i in message %}
+                        {% if status == 'OK' %}
+                            <div class="alert alert-info" role="alert">{{ i }}</div>
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">{{ i }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    {% endblock %}

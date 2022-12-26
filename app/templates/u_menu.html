@@ -1,0 +1,49 @@
+{% extends 'IndexPage.html' %}
+    {% block content %}
+        <form action="/se" method="post" class="row g-3">
+        <div class="col-auto">
+            <label for="sea">Search by dish name</label>
+        </div>
+        <div class="col-auto">
+            <input name='se' type="text" class="form-control" id="sea" placeholder="Search">
+        </div>
+            <div class="col-auto">
+        <button class="btn btn-outline-secondary" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
+        </div>
+        </form>
+        <div>
+        <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Picture</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in menu_list %}
+            <tr>
+                <td ><img class="list_pic" src="{{ i.pic }}"/></td>
+                <td>{{ i.dish }}</td>
+                <td>{{ i.price }}</td>
+                <td>
+                    <button class="op_btn" type="submit">
+                        <a onclick="favo()" href="{{ url_for('favorite', this_id=i.Cid) }}">
+                            <i class="bi bi-star"></i>
+                        </a>
+                    </button>
+                    <button class="op_btn" type="submit">
+                        <a onclick="add_car()" href="{{ url_for('add_shopping', this_id=i.Cid) }}">
+                            <i class="bi bi-plus-circle"></i>
+                        </a>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        </div>
+    {% endblock %}

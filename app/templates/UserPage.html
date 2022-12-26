@@ -1,0 +1,46 @@
+{% extends "IndexPage.html" %}
+    {% block content %}
+        <div>
+            <h3 class="the_title">Welcome! account: {{ uname }}</h3>
+        <button class="btn btn-warning">
+            <a class="bt" onclick="my_message();return false;" href="#">My Message</a>
+        </button>
+        <button class="btn btn-warning">
+            <a class="bt" href="/logout">Log out</a>
+        </button>
+        <button class='btn btn-warning' type='submit'>
+            <a CLASS="bt" href='/changeMessage'>Change My Message</a>
+        </button>
+        </div>
+
+    <div class="main">
+        <a href="javascript:" class="left"><</a>
+        <a href="javascript:" class="right">></a>
+        <ul class="the_ul">
+            <li>
+                <a href="#"><img src="../static/picture/roll1.png" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="../static/picture/roll2.png" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="../static/picture/roll3.png" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="../static/picture/roll4.png" alt=""></a>
+            </li>
+        </ul>
+        <ol class="circle">
+        </ol>
+    </div>
+    <div>
+        <button class="guide_btn" type="button">
+            <a href="/Menu">Right now to order!</a>
+        </button>
+    </div>
+        <div class="hide_block">
+        <span id="un">{{ user.Username }}</span>
+        <span id="pw">{{ user.Password }}</span>
+        <span id="cur">{{ user.Currency }}</span>
+    </div>
+{% endblock %}
