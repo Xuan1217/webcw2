@@ -1,66 +1,60 @@
 window.addEventListener('load',function(){
-	//1.获取元素
+	//get elements
 	var left = document.querySelector('.left');
 	var right = document.querySelector('.right');
 	var main = document.querySelector('.main');
 	var mainWidth = main.offsetWidth;
-	//2.鼠标经过显示左右按钮
+	//the mouse slide left or right button
 	main.addEventListener('mouseenter',function(){
 		left.style.display = 'block';
 		right.style.display = 'block';
 		clearInterval(timer);
-		timer = null; // 清除定时器变量
+		timer = null; // clean the variable of counter
 	})
-	//3.鼠标离开隐藏左右按钮
+	//mouse leave and button are hided
 	main.addEventListener('mouseleave',function(){
 		left.style.display = 'none';
 		right.style.display = 'none';
 		timer = setInterval(function() {
-			//手动调用点击事件
+			//click and all the function
 			right.click();
 		}, 2000);
 	})
-	//4.动态生成圆圈
+	//create little circle
 	var ul = main.querySelector('ul')
 	var ol = main.querySelector('.circle')
 	for (var i = 0; i < ul.children.length; i++) {
-		//创建一个li
+		//build a <li>
 		var li = document.createElement('li');
-		// 记录当前小圆圈的索引号 通过自定义属性来做
+		// record the number of little circle
 		li.setAttribute('index', i);
-		//插入ol
+		//insert <ol>
 		ol.appendChild(li);
-		//排他思想
 		li.addEventListener('click', function() {
-			//所有li清除类名
+			//clean <li> class name
 			for (var i = 0; i < ol.children.length; i++) {
 				ol.children[i].className = '';
 			}
-			//当前li设置current类名
+			//the current <li> set class
 			this.className = 'current';
 			var index = this.getAttribute('index');
-			 // 当我们点击了某个小li 就要把这个li 的索引号给 num
+			 // when click one little circle, give num
 			num = index;
-			// 当我们点击了某个小li 就要把这个li 的索引号给 circle
+			// when click one little circle, give circle
 			circle = index;
-			// 5. 点击小圆圈，移动ul
+			// 5. click and move <ul>
 			animate(ul, -index * mainWidth);
 		})
 	}
-	//第一个小li设置为current
 	ol.children[0].className = 'current';
-	// 克隆第一张图片(li)放到ul 最后面
 	var first = ul.children[0].cloneNode(true);
 	ul.appendChild(first);
-	// 6.点击右按钮，图片滚动一张
 	var num = 0;
-	 // circle 控制小圆圈的播放
 	var circle = 0;
 	var flag = true;
-	// 7.右侧按钮
+	// right button
 	right.addEventListener('click',function(){
 	if(flag){
-		//关闭节流阀
 			flag = false;
 			if(num == ul.children.length-1){
 				ul.style.left = 0;
@@ -68,14 +62,12 @@ window.addEventListener('load',function(){
 			}
 			num++;
 			animate(ul, -num*mainWidth,function(){
-				//打开节流阀
 				flag = true;
 			});
 			circle++;
 			if (circle == ol.children.length) {
 				circle = 0;
 			}
-			// 调用函数
 			circleChange();
 		}
 	});
@@ -95,21 +87,17 @@ window.addEventListener('load',function(){
 			if (circle < 0) {
 				circle = ol.children.length - 1;
 			}
-			// 调用函数
 			circleChange();
 		}
 	});
 	function circleChange() {
-		// 先清除其余小圆圈的current类名
 		for (var i = 0; i < ol.children.length; i++) {
 			ol.children[i].className = '';
 		}
-		// 留下当前的小圆圈的current类名
 		ol.children[circle].className = 'current';
 	}
-	// 自动播放轮播图
+	// auto play
 	var timer = setInterval(function() {
-		//手动调用点击事件
 		right.click();
 	}, 2000);
 })

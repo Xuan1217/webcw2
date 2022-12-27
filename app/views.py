@@ -7,23 +7,23 @@ from app.models import*
 
 
 @app.context_processor
-def alert_status():
+def alert_status():     # set status
     status = session.get('status', '')
     return {'status': status}
 
 
 @app.before_request
-def log_each_request():
+def log_each_request():     # set logger format
     app.logger.info('【method】{}【path】{}【addr】{}'.format(request.method, request.path, request.remote_addr))
 
 
 @app.route('/')
-def HomePage():  # put application's code here
+def HomePage():  # the home page
     db.create_all()
     return render_template('HomePage.html')
 
 
-@app.route('/Menu')
+@app.route('/Menu')     # user's menu
 def Menu():
     the_menu = Dishes.query.all()
     uid = request.cookies.get('user_id')
@@ -31,7 +31,7 @@ def Menu():
     return render_template('u_menu.html', menu_list=the_menu)
 
 
-@app.route('/favorite')
+@app.route('/favorite')     # function of favorite dishes
 def favorite():
     cid = request.args.get('this_id')
     fav_list = Dishes.query.filter(Dishes.Cid == cid).first()
@@ -41,7 +41,7 @@ def favorite():
     return redirect('/Menu')
 
 
-@app.route('/add_shopping')
+@app.route('/add_shopping')     # function of add one dish into the shopping car
 def add_shopping():
     dishId = request.args.get('this_id')
     userId = request.cookies.get('user_id')
@@ -61,7 +61,7 @@ def add_shopping():
     return redirect('/Menu')
 
 
-@app.route('/decline_shopping')
+@app.route('/decline_shopping')     # delete one number of dish which is in the shopping car
 def decline_shopping():
     dishId = request.args.get('this_id')
     userId = request.cookies.get('user_id')
@@ -76,7 +76,7 @@ def decline_shopping():
         return redirect('/shoppingCar')
 
 
-@app.route('/ad_sh')
+@app.route('/ad_sh')    # function of add one number dish which is in the shoppin car
 def ad_sh():
     dishId = request.args.get('this_id')
     userId = request.cookies.get('user_id')
@@ -86,7 +86,7 @@ def ad_sh():
     return redirect('/shoppingCar')
 
 
-@app.route('/UserPage')
+@app.route('/UserPage')     # the user's home page
 def UserPage():
     u = request.cookies.get('user_id')
     uname = request.cookies.get('user_name')
@@ -94,17 +94,17 @@ def UserPage():
     return render_template('UserPage.html', uname=uname, user=user)
 
 
-@app.route('/LogPage')
+@app.route('/LogPage')      # the login form page
 def LogPage():
     return render_template('Login.html')
 
 
-@app.route('/RegPage')
+@app.route('/RegPage')      # the register form page
 def RegPage():
     return render_template('Register.html')
 
 
-@app.route('/logout')
+@app.route('/logout')       # function of log out
 def logout():
     resp = make_response(redirect('/'))
     resp.delete_cookie('user_id')
@@ -112,7 +112,7 @@ def logout():
     return resp
 
 
-@app.route('/Login', methods=['POST', 'GET'])
+@app.route('/Login', methods=['POST', 'GET'])       # function of login
 def Login():
     if request.method == 'POST':
         Lus = request.form.get('Lu')
@@ -160,12 +160,15 @@ def Login():
         return render_template('Login.html')
 
 
-@app.route('/Register', methods=['POST', 'GET'])
+@app.route('/Register', methods=['POST', 'GET'])            # function of register a user
 def Register():
     if request.method == 'POST':
         us = request.form.get('Ru')
         pw = request.form.get('Rp')
         check = User.query.all()
+        if us == "Admin":
+            flash("the Username is exist!")
+            return render_template('Register.html')
         for i in check:
             if i.Username == us:
                 flash("the Username is exist!")
@@ -183,20 +186,18 @@ def Register():
         return render_template('HomePage.html')
 
 
-@app.route('/shoppingCar')
+@app.route('/shoppingCar')          # the shopping car page
 def shoppingCar():
     bill = 0
     us = request.cookies.get('user_id')
-    print(us)
     current_app.logger.info("User(ID): " + us + "enter the shopping car")
     car_list = Car.query.filter(Car.Uid == us).all()
     for i in car_list:
         bill += (i.price*i.Num)
-    print(car_list)
     return render_template('shoppingCar.html', car_list=car_list, bill=bill)
 
 
-@app.route('/delete')
+@app.route('/delete')           #delete a dishes which is in the shopping car
 def delete():
     dishId = request.args.get('this_id')
     userId = request.cookies.get('user_id')
@@ -207,7 +208,7 @@ def delete():
     return redirect('/shoppingCar')
 
 
-@app.route('/ShoppingPay')
+@app.route('/ShoppingPay')          # function of pay the dishes
 def ShoppingPay():
     bill = 0
     pus = request.cookies.get('user_id')
@@ -233,18 +234,18 @@ def ShoppingPay():
         return redirect('/shoppingCar')
 
 
-@app.route('/manager')
+@app.route('/manager')          # the manager home page
 def manager():
     return render_template('manager.html')
 
 
-@app.route('/manager/manager_user')
+@app.route('/manager/manager_user')         # manager check the user here
 def manager_user():
     the_user = User.query.all()
     return render_template('manager_user.html', user_list=the_user)
 
 
-@app.route('/manager/manager_user/del_user')
+@app.route('/manager/manager_user/del_user')        # function of manager deleting a user
 def del_user():
     userId = request.args.get('this_id')
     user = User.query.filter(User.Uid == userId).first()
@@ -255,7 +256,7 @@ def del_user():
     return redirect('/manager_user')
 
 
-@app.route('/manager/manager_user/ad_cur')
+@app.route('/manager/manager_user/ad_cur')      # function of manager adding currency for user
 def ad_cur():
     userId = request.args.get('this_id')
     user = User.query.filter(User.Uid == userId).first()
@@ -266,14 +267,14 @@ def ad_cur():
     return redirect('/manager/manager_user')
 
 
-@app.route('/manager/manager_dish')
+@app.route('/manager/manager_dish')     # manager check dishes page
 def manager_dish():
     dish_list = Dishes.query.all()
     current_app.logger.info("Admin begin to manager dish")
     return render_template('manager_dishes.html', dish_list=dish_list)
 
 
-@app.route('/adj_dish')
+@app.route('/adj_dish')     # function of manager adjust the dishes
 def adj_dish():
     cid = request.args.get('this_id')
     this_dish = Dishes.query.filter(Dishes.Cid == cid).first()
@@ -281,12 +282,12 @@ def adj_dish():
     return render_template('adjust_dish.html', dish=this_dish)
 
 
-@app.route('/add_dish')
+@app.route('/add_dish')     # function of manager adding a new dish
 def add_dish():
     return render_template('add_dish.html')
 
 
-@app.route('/del_dish')
+@app.route('/del_dish')       # function of manager deleting a exist dish
 def del_dish():
     cid = request.args.get('this_id')
     this_dish = Dishes.query.filter(Dishes.Cid == cid).first()
@@ -331,7 +332,7 @@ def add_submit():
         return redirect('/manager/manager_dish')
 
 
-@app.route('/se', methods=['POST', 'GET'])
+@app.route('/se', methods=['POST', 'GET'])      # the function of search
 def se():
     if request.method == 'POST':
         b = request.form.get('se')
@@ -341,14 +342,14 @@ def se():
         return render_template("search_res.html", menu_list=dish)
 
 
-@app.route('/changeMessage')
+@app.route('/changeMessage')        # the user can change their personal message
 def changeMessage():
     uid = request.cookies.get('user_id')
     us = User.query.filter(User.Uid == uid).first()
     return render_template('c_message.html', user=us)
 
 
-@app.route('/adjust_message', methods=['POST', 'GET'])
+@app.route('/adjust_message', methods=['POST', 'GET'])      # submit the adjusting message
 def adjust_message():
     if request.method == 'POST':
         un = request.form.get('m_un')
